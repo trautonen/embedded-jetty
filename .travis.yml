@@ -1,0 +1,9 @@
+language: java
+
+jdk:
+  - oraclejdk7
+
+before_install:
+  - git submodule update --init --recursive
+
+script: mvn clean verify
