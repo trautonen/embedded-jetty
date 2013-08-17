@@ -10,8 +10,9 @@ import org.eclipse.jetty.server.Server;
 import org.eluder.jetty.server.EmbeddedJetty;
 import org.eluder.jetty.server.ServerConfig;
 
-public class EmbeddedJettyCli extends EmbeddedJetty {
+public final class EmbeddedJettyCli extends EmbeddedJetty {
     
+    private static final int HELP_WIDTH = 100;
     private static final Class<? extends ServerConfig> CONFIG_TYPE = ServerConfig.class;
     
     private EmbeddedJettyCli(final ServerConfig serverConfig) {
@@ -48,7 +49,7 @@ public class EmbeddedJettyCli extends EmbeddedJetty {
     
     private static void showHelp(final Options options) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.setWidth(100);
+        formatter.setWidth(HELP_WIDTH);
         formatter.printHelp("java -jar <artifact> <options>", options);
     }
 }

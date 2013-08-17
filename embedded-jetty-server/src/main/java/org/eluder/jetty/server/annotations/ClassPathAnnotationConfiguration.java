@@ -106,6 +106,7 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
     }
     
     private ClassNameResolver getClassNameResolver(final WebAppContext context) {
+        // Checkstyle OFF: NeedBraces
         return new ClassNameResolver() {
             @Override
             public boolean isExcluded(final String name) {
@@ -122,6 +123,7 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
                 return true;
             }
         };
+        // Checkstyle ON: NeedBraces
     }
     
     private Pattern getJarPattern(final WebAppContext context) {

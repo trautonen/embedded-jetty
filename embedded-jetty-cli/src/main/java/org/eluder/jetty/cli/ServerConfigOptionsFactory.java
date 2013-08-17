@@ -13,6 +13,8 @@ import org.eluder.jetty.server.ServerConfig;
 
 public class ServerConfigOptionsFactory {
     
+    private static final int SETTER_PREFIX_LENGTH = 3;
+    
     private final Class<? extends ServerConfig> configType;
     
     public ServerConfigOptionsFactory(final Class<? extends ServerConfig> configType) {
@@ -70,7 +72,7 @@ public class ServerConfigOptionsFactory {
         try {
             Class<?> target = setter.getDeclaringClass();
             Class<?> argumentType = ReflectionUtils.getSetterArgumentType(setter);
-            String getterName = (PropertyMapper.isBoolean(argumentType) ? "is" : "get") + setter.getName().substring(3);
+            String getterName = (PropertyMapper.isBoolean(argumentType) ? "is" : "get") + setter.getName().substring(SETTER_PREFIX_LENGTH);
             return target.getMethod(getterName);
         } catch (NoSuchMethodException | SecurityException ex) {
             throw new RuntimeException(ex);

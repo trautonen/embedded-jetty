@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.eluder</groupId>
 		<artifactId>eluder-parent</artifactId>
-		<version>3</version>
+		<version>4-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.eluder.jetty</groupId>
@@ -23,6 +23,13 @@
 	</properties>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+			</plugin>
+		</plugins>
+
 		<pluginManagement>
 			<plugins>
 				<plugin>

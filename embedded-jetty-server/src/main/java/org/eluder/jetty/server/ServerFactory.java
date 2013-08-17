@@ -93,7 +93,9 @@ public class ServerFactory {
     public Server create() {
         Server server = new Server(createThreadPool());
         server.addBean(createClassList());
-        server.setConnectors(new Connector[] { createConnector(server) });
+        server.setConnectors(new Connector[] {
+                createConnector(server)
+        });
         server.setHandler(createContextHandlerCollection());
         return server;
     }

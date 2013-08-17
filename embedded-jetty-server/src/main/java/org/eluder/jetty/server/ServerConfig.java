@@ -4,6 +4,7 @@ import org.eclipse.jetty.util.annotation.Name;
 
 public class ServerConfig {
 
+    // Checkstyle OFF: MagicNumber
     private int     port         = 8080;
     private String  contextPath  = "/";
     private String  webApp       = null;
@@ -14,6 +15,7 @@ public class ServerConfig {
     private int     maxThreads   = 100;
     private boolean plus         = false;
     private boolean classPath    = false;
+    // Checkstyle ON: MagicNumber
     
     public int getPort() {
         return port;
