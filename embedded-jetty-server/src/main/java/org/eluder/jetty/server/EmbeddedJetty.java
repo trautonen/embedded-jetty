@@ -9,7 +9,7 @@ public class EmbeddedJetty {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedJetty.class);
     
-    protected ServerConfig serverConfig;
+    protected final ServerConfig serverConfig;
 
     public EmbeddedJetty(final ServerConfig serverConfig) {
         this.serverConfig = serverConfig;

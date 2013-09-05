@@ -1,9 +1,11 @@
 package org.eluder.jetty.server;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.io.RuntimeIOException;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Connector;
@@ -13,6 +15,7 @@ import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
 import org.eclipse.jetty.webapp.Configuration.ClassList;
@@ -26,6 +29,8 @@ import org.eluder.jetty.server.annotations.ClassPathAnnotationConfiguration;
 
 public class ServerFactory {
 
+    private static final String CLASSPATH_PREFIX = "classpath:";
+    
     protected final ServerConfig config;
 
     public ServerFactory(final ServerConfig config) {
@@ -77,6 +82,7 @@ public class ServerFactory {
         WebAppContext context = new WebAppContext();
         context.setContextPath(config.getContextPath());
         context.setWar(config.getWebApp());
+        context.setBaseResource(getBaseResource(config.getResource()));
         
         List<Handler> handlers = new ArrayList<>(1);
         handlers.add(context);
@@ -102,5 +108,20 @@ public class ServerFactory {
     
     private boolean isJarApp() {
         return (config.getWebApp() != null && config.getWebApp().endsWith(".jar"));
+    }
+    
+    private Resource getBaseResource(final String resource) {
+        if (resource == null) {
+            return null;
+        }
+        try {
+            if (resource.startsWith(CLASSPATH_PREFIX)) {
+                return Resource.newClassPathResource(resource.substring(CLASSPATH_PREFIX.length()));
+            } else {
+                return Resource.newResource(resource);
+            }
+        } catch (IOException ex) {
+            throw new RuntimeIOException(ex);
+        }
     }
 }

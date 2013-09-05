@@ -8,10 +8,11 @@ public class ServerConfig {
     private int     port         = 8080;
     private String  contextPath  = "/";
     private String  webApp       = null;
+    private String  resource     = null;
 
     private int     idleTimeout  = 60 * 60 * 1000;
     private int     soLingerTime = -1;
-    private int     minThreads   = 10;
+    private int     minThreads   = 5;
     private int     maxThreads   = 100;
     private boolean plus         = false;
     private boolean classPath    = false;
@@ -41,6 +42,15 @@ public class ServerConfig {
     
     public ServerConfig setWebApp(@Name(value = "webApp", description = "path to web app directory or war / jar") final String webApp) {
         this.webApp = webApp;
+        return this;
+    }
+    
+    public String getResource() {
+        return resource;
+    }
+    
+    public ServerConfig setResource(@Name(value = "resource", description = "path to static resource directory") final String resource) {
+        this.resource = resource;
         return this;
     }
     
@@ -105,6 +115,7 @@ public class ServerConfig {
             .append("  port = ").append(port).append("\n")
             .append("  contextPath = ").append(contextPath).append("\n")
             .append("  webApp = ").append(webApp).append("\n")
+            .append("  resource = ").append(resource).append("\n")
             .append("  idleTimeout = ").append(idleTimeout).append("\n")
             .append("  soLingerTime = ").append(soLingerTime).append("\n")
             .append("  minThreads = ").append(minThreads).append("\n")

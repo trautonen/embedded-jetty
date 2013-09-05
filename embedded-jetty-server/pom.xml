@@ -5,19 +5,30 @@
 		<artifactId>embedded-jetty</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
+
 	<artifactId>embedded-jetty-server</artifactId>
 
 	<dependencies>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>${jetty.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>javax.servlet</artifactId>
+					<groupId>org.eclipse.jetty.orbit</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -29,31 +40,16 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-annotations</artifactId>
 			<version>${jetty.version}</version>
-			<!-- 
-			<exclusions>
-				<exclusion>
-					<artifactId>org.objectweb.asm</artifactId>
-					<groupId>org.eclipse.jetty.orbit</groupId>
-				</exclusion>
-			</exclusions>
-			 -->
 		</dependency>
-		<!-- 
 		<dependency>
-			<groupId>org.ow2.asm</groupId>
-			<artifactId>asm-all</artifactId>
-			<version>4.0</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
 		</dependency>
-		 -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
-        </dependency>
 		<dependency>
-		  <groupId>org.slf4j</groupId>
-		  <artifactId>slf4j-log4j12</artifactId>
-		  <scope>compile</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
