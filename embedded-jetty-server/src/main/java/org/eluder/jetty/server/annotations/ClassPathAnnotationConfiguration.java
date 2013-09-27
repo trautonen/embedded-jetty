@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jetty.annotations.AbstractDiscoverableAnnotationHandler;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.annotations.AnnotationParser;
@@ -17,8 +16,6 @@ import org.eclipse.jetty.annotations.ClassNameResolver;
 import org.eclipse.jetty.util.PatternMatcher;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
-import org.eclipse.jetty.util.resource.Resource;
-import org.eclipse.jetty.webapp.WebAppClassLoader;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
@@ -26,23 +23,6 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
     public static final String CLASSPATH_JAR_PATTERN = "org.eclipse.jetty.server.webapp.ClassPathIncludeJarPattern";
     
     private static final Logger LOG = Log.getLogger(ClassPathAnnotationConfiguration.class);
-    
-    @Override
-    public void configure(final WebAppContext context) throws Exception {
-        if (isJar(context.getWar())) {
-            Resource jar = Resource.newResource(context.getWar());
-            String filePattern = ".*" + Pattern.quote(FilenameUtils.getName(jar.getName()));
-            String jarPattern = (String) context.getAttribute(CLASSPATH_JAR_PATTERN);
-            if (jarPattern == null || jarPattern.isEmpty()) {
-                jarPattern = filePattern;
-            } else {
-                jarPattern += "," + filePattern;
-            }
-            context.setAttribute(CLASSPATH_JAR_PATTERN, jarPattern);
-            ((WebAppClassLoader) context.getClassLoader()).addClassPath(jar);
-        }
-        super.configure(context);
-    }
     
     @Override
     public void parseContainerPath(final WebAppContext context, final AnnotationParser parser) throws Exception {
@@ -70,6 +50,15 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
         // noop
     }
 
+    protected final Pattern getJarPattern(final WebAppContext context) {
+        String attribute = (String) context.getAttribute(CLASSPATH_JAR_PATTERN);
+        return (attribute == null ? null : Pattern.compile(attribute));
+    }
+    
+    protected final boolean isJar(final String resource) {
+        return (resource != null && resource.endsWith(".jar"));
+    }
+    
     private URI[] getClassPathUris(final WebAppContext context) throws Exception {
         final List<URI> classPathUris = new ArrayList<>();
         final PatternMatcher jarMatcher = new PatternMatcher() {
@@ -124,14 +113,5 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
             }
         };
         // Checkstyle ON: NeedBraces
-    }
-    
-    private Pattern getJarPattern(final WebAppContext context) {
-        String attribute = (String) context.getAttribute(CLASSPATH_JAR_PATTERN);
-        return (attribute == null ? null : Pattern.compile(attribute));
-    }
-    
-    private boolean isJar(final String resource) {
-        return (resource != null && resource.endsWith(".jar"));
     }
 }

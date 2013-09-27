@@ -26,10 +26,12 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.eluder.jetty.server.annotations.ClassPathAnnotationConfiguration;
+import org.eluder.jetty.server.annotations.JarAppAnnotationConfiguration;
 
 public class ServerFactory {
 
     private static final String CLASSPATH_PREFIX = "classpath:";
+    private static final String JAR_SUFFIX = ".jar";
     
     protected final ServerConfig config;
 
@@ -50,7 +52,9 @@ public class ServerFactory {
             classList.add(WebInfConfiguration.class.getName());
             classList.add(WebXmlConfiguration.class.getName());
         }
-        if (config.isClassPath() || isJarApp()) {
+        if (isJarApp()) {
+            classList.add(JarAppAnnotationConfiguration.class.getName());
+        } else if (config.isClassPath()) {
             classList.add(ClassPathAnnotationConfiguration.class.getName());
         } else {
             classList.add(AnnotationConfiguration.class.getName());
@@ -107,7 +111,7 @@ public class ServerFactory {
     }
     
     private boolean isJarApp() {
-        return (config.getWebApp() != null && config.getWebApp().endsWith(".jar"));
+        return (config.getWebApp() != null && config.getWebApp().endsWith(JAR_SUFFIX));
     }
     
     private Resource getBaseResource(final String resource) {
