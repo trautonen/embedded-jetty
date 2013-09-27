@@ -19,7 +19,7 @@
 
 	<properties>
 		<java.version>1.7</java.version>
-		<jetty.version>9.0.4.v20130625</jetty.version>
+		<jetty.version>9.0.5.v20130815</jetty.version>
 	</properties>
 
 	<build>
