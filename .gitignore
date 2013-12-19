@@ -1,6 +1,12 @@
 target
-﻿target/*
+target/*
+dependency-reduced-pom.xml
+
+# Eclipse
 .settings
 .project
 .classpath
-dependency-reduced-pom.xml
+
+# Idea
+*.iml
+.idea
