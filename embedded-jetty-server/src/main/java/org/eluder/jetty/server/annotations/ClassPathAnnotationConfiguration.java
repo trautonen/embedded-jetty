@@ -5,17 +5,17 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.eclipse.jetty.annotations.AbstractDiscoverableAnnotationHandler;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.annotations.AnnotationParser;
-import org.eclipse.jetty.annotations.AnnotationParser.DiscoverableAnnotationHandler;
-import org.eclipse.jetty.annotations.ClassNameResolver;
 import org.eclipse.jetty.util.PatternMatcher;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
+import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
@@ -26,18 +26,19 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
     
     @Override
     public void parseContainerPath(final WebAppContext context, final AnnotationParser parser) throws Exception {
-        URI[] classPathUris = getClassPathUris(context);
-        parser.clearHandlers();
-        for (DiscoverableAnnotationHandler h : _discoverableAnnotationHandlers) {
-            if (h instanceof AbstractDiscoverableAnnotationHandler) {
-                ((AbstractDiscoverableAnnotationHandler) h).setResource(null);
-            }
+        final Set<AnnotationParser.Handler> handlers = new HashSet<>();
+        handlers.addAll(_discoverableAnnotationHandlers);
+        handlers.addAll(_containerInitializerAnnotationHandlers);
+        if (_classInheritanceHandler != null) {
+            handlers.add(_classInheritanceHandler);
         }
-        parser.registerHandlers(_discoverableAnnotationHandlers);
-        parser.registerHandler(_classInheritanceHandler);
-        parser.registerHandlers(_containerInitializerAnnotationHandlers);
 
-        parser.parse(classPathUris, getClassNameResolver(context));
+        for (URI u : getClassPathUris(context)) {
+            final Resource r = Resource.newResource(u);
+            //queue it up for scanning if using multithreaded mode
+            if (_parserTasks != null)
+                _parserTasks.add(new ParserTask(parser, handlers, r, _webAppClassNameResolver));
+        }
     }
 
     @Override
@@ -59,7 +60,7 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
         return (resource != null && resource.endsWith(".jar"));
     }
     
-    private URI[] getClassPathUris(final WebAppContext context) throws Exception {
+    private List<URI> getClassPathUris(final WebAppContext context) throws Exception {
         final List<URI> classPathUris = new ArrayList<>();
         final PatternMatcher jarMatcher = new PatternMatcher() {
             @Override
@@ -91,27 +92,6 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Finding annotatated classes from: " + classPathUris.toString());
         }
-        return classPathUris.toArray(new URI[classPathUris.size()]);
-    }
-    
-    private ClassNameResolver getClassNameResolver(final WebAppContext context) {
-        // Checkstyle OFF: NeedBraces
-        return new ClassNameResolver() {
-            @Override
-            public boolean isExcluded(final String name) {
-                if (context.isSystemClass(name)) return true;
-                if (context.isServerClass(name)) return false;
-                return false;
-            }
-
-            @Override
-            public boolean shouldOverride(final String name) {
-                // looking at webapp classpath, found already-parsed class of
-                // same name - did it come from system or duplicate in webapp?
-                if (context.isParentLoaderPriority()) return false;
-                return true;
-            }
-        };
-        // Checkstyle ON: NeedBraces
+        return classPathUris;
     }
 }
