@@ -36,8 +36,9 @@ public class ClassPathAnnotationConfiguration extends AnnotationConfiguration {
         for (URI u : getClassPathUris(context)) {
             final Resource r = Resource.newResource(u);
             //queue it up for scanning if using multithreaded mode
-            if (_parserTasks != null)
+            if (_parserTasks != null) {
                 _parserTasks.add(new ParserTask(parser, handlers, r, _webAppClassNameResolver));
+            }
         }
     }
 
