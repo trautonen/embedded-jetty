@@ -15,14 +15,14 @@ public class EmbeddedJetty {
         this.serverConfig = serverConfig;
     }
     
-    protected ServerFactory createServerFactory() {
-        return new ServerFactory(serverConfig);
-    }
-    
-    public void run() throws Exception {
+    public final void run() throws Exception {
         Server server = createServerFactory().create();
         LOGGER.info(">>> Starting embedded Jetty {}\n{}", Jetty.VERSION, serverConfig);
         start(server);
+    }
+
+    protected ServerFactory createServerFactory() {
+        return new ServerFactory(serverConfig);
     }
     
     protected void start(final Server server) throws Exception {

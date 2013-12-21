@@ -8,30 +8,20 @@ import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.io.RuntimeIOException;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
-import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.HttpConfiguration;
-import org.eclipse.jetty.server.HttpConnectionFactory;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
 import org.eclipse.jetty.webapp.Configuration.ClassList;
-import org.eclipse.jetty.webapp.FragmentConfiguration;
-import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
-import org.eclipse.jetty.webapp.MetaInfConfiguration;
-import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.webapp.WebInfConfiguration;
-import org.eclipse.jetty.webapp.WebXmlConfiguration;
-import org.eluder.jetty.server.annotations.ClassPathAnnotationConfiguration;
-import org.eluder.jetty.server.annotations.JarAppAnnotationConfiguration;
+import org.eclipse.jetty.webapp.*;
+import org.eluder.jetty.server.configuration.ClassPathConfiguration;
+import org.eluder.jetty.server.configuration.JarAppConfiguration;
 
 public class ServerFactory {
 
     private static final String CLASSPATH_PREFIX = "classpath:";
-    private static final String JAR_SUFFIX = ".jar";
     
     protected final ServerConfig config;
 
@@ -48,17 +38,15 @@ public class ServerFactory {
     
     protected ClassList createClassList() {
         ClassList classList = new ClassList(new String[0]);
-        if (config.getWebApp() != null && !isJarApp()) {
+        if (config.isJarApp()) {
+            classList.add(JarAppConfiguration.class.getName());
+        } else if (config.isClassPath()) {
+            classList.add(ClassPathConfiguration.class.getName());
+        } else {
             classList.add(WebInfConfiguration.class.getName());
             classList.add(WebXmlConfiguration.class.getName());
         }
-        if (isJarApp()) {
-            classList.add(JarAppAnnotationConfiguration.class.getName());
-        } else if (config.isClassPath()) {
-            classList.add(ClassPathAnnotationConfiguration.class.getName());
-        } else {
-            classList.add(AnnotationConfiguration.class.getName());
-        }
+        classList.add(AnnotationConfiguration.class.getName());
         classList.add(MetaInfConfiguration.class.getName());
         classList.add(FragmentConfiguration.class.getName());
         if (config.isPlus()) {
@@ -86,8 +74,14 @@ public class ServerFactory {
         WebAppContext context = new WebAppContext();
         context.setContextPath(config.getContextPath());
         context.setWar(config.getWebApp());
-        context.setBaseResource(getBaseResource(config.getResource()));
         
+        Resource baseResource = getBaseResource(config.getResource());
+        if (baseResource != null) {
+            ResourceHandler resourceHandler = new ResourceHandler();
+            resourceHandler.setBaseResource(baseResource);
+            context.setHandler(resourceHandler);
+        }
+
         List<Handler> handlers = new ArrayList<>(1);
         handlers.add(context);
         return handlers;
@@ -110,11 +104,7 @@ public class ServerFactory {
         return server;
     }
     
-    private boolean isJarApp() {
-        return (config.getWebApp() != null && config.getWebApp().endsWith(JAR_SUFFIX));
-    }
-    
-    private Resource getBaseResource(final String resource) {
+    protected final Resource getBaseResource(String resource) {
         if (resource == null) {
             return null;
         }

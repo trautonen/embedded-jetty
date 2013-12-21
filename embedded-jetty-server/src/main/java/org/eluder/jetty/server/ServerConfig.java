@@ -4,6 +4,8 @@ import org.eclipse.jetty.util.annotation.Name;
 
 public class ServerConfig {
 
+    private static final String JAR_SUFFIX = ".jar";
+    
     // Checkstyle OFF: MagicNumber
     private int     port         = 8080;
     private String  contextPath  = "/";
@@ -106,6 +108,10 @@ public class ServerConfig {
     public ServerConfig setClassPath(@Name(value = "classPath", description = "use classpath annotation scanning") final boolean classPath) {
         this.classPath = classPath;
         return this;
+    }
+    
+    public boolean isJarApp() {
+        return (getWebApp() != null && getWebApp().endsWith(JAR_SUFFIX));
     }
     
     @Override
