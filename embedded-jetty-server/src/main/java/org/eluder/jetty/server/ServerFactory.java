@@ -119,7 +119,7 @@ public class ServerFactory {
         return server;
     }
     
-    protected final Resource getBaseResource(String resource) {
+    protected final Resource getBaseResource(final String resource) {
         if (resource == null) {
             return null;
         }
