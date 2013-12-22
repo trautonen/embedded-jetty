@@ -52,7 +52,7 @@ public class ServerConfig {
         return baseResource;
     }
     
-    public ServerConfig setBaseResource(@Name(value = "baseResource", description = "path to static baseResource directory") final String baseResource) {
+    public ServerConfig setBaseResource(@Name(value = "baseResource", description = "path to static resources directory") final String baseResource) {
         this.baseResource = baseResource;
         return this;
     }
@@ -79,7 +79,7 @@ public class ServerConfig {
         return minThreads;
     }
     
-    public ServerConfig setMinThreads(@Name(value = "minThreads", description = "min number of threads in pool") final int minThreads) {
+    public ServerConfig setMinThreads(@Name(value = "minThreads", description = "min number of server threads") final int minThreads) {
         this.minThreads = minThreads;
         return this;
     }
@@ -88,7 +88,7 @@ public class ServerConfig {
         return maxThreads;
     }
     
-    public ServerConfig setMaxThreads(@Name(value = "maxThreads", description = "max number of threads in pool") final int maxThreads) {
+    public ServerConfig setMaxThreads(@Name(value = "maxThreads", description = "max number of server threads") final int maxThreads) {
         this.maxThreads = maxThreads;
         return this;
     }
@@ -97,7 +97,7 @@ public class ServerConfig {
         return plus;
     }
     
-    public ServerConfig setPlus(@Name(value = "plus", description = "use plus configuration") final boolean plus) {
+    public ServerConfig setPlus(@Name(value = "plus", description = "use plus configuration for jndi") final boolean plus) {
         this.plus = plus;
         return this;
     }
