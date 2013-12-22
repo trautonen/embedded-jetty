@@ -13,7 +13,7 @@ public class ServerConfigOptionsFactoryTest {
     @Test
     public void testCreate() {
         Options options = new ServerConfigOptionsFactory(ServerConfig.class).create();
-        assertEquals(10, options.getOptions().size());
+        assertEquals(11, options.getOptions().size());
         assertTrue(options.getOption("webApp").isRequired());
         assertTrue(options.getOption("maxThreads").hasArg());
         assertFalse(options.getOption("classPath").hasArg());

@@ -7,17 +7,18 @@ public class ServerConfig {
     private static final String JAR_SUFFIX = ".jar";
     
     // Checkstyle OFF: MagicNumber
-    private int     port         = 8080;
-    private String  contextPath  = "/";
-    private String  webApp       = null;
-    private String  resource     = null;
+    private int     port           = 8080;
+    private String  contextPath    = "/";
+    private String  webApp         = null;
+    private String  baseResource   = null;
 
-    private int     idleTimeout  = 60 * 60 * 1000;
-    private int     soLingerTime = -1;
-    private int     minThreads   = 5;
-    private int     maxThreads   = 100;
-    private boolean plus         = false;
-    private boolean classPath    = false;
+    private int     idleTimeout    = 60 * 60 * 1000;
+    private int     soLingerTime   = -1;
+    private int     minThreads     = 5;
+    private int     maxThreads     = 100;
+    private boolean plus           = false;
+    private boolean classPath      = false;
+    private boolean defaultServlet = false;
     // Checkstyle ON: MagicNumber
     
     public int getPort() {
@@ -47,12 +48,12 @@ public class ServerConfig {
         return this;
     }
     
-    public String getResource() {
-        return resource;
+    public String getBaseResource() {
+        return baseResource;
     }
     
-    public ServerConfig setResource(@Name(value = "resource", description = "path to static resource directory") final String resource) {
-        this.resource = resource;
+    public ServerConfig setBaseResource(@Name(value = "baseResource", description = "path to static baseResource directory") final String baseResource) {
+        this.baseResource = baseResource;
         return this;
     }
     
@@ -109,7 +110,16 @@ public class ServerConfig {
         this.classPath = classPath;
         return this;
     }
-    
+
+    public boolean isDefaultServlet() {
+        return defaultServlet;
+    }
+
+    public ServerConfig setDefaultServlet(@Name(value = "defaultServlet", description = "use default servlet to serve static content") final boolean defaultServlet) {
+        this.defaultServlet = defaultServlet;
+        return this;
+    }
+
     public boolean isJarApp() {
         return (getWebApp() != null && getWebApp().endsWith(JAR_SUFFIX));
     }
@@ -121,13 +131,14 @@ public class ServerConfig {
             .append("  port = ").append(port).append("\n")
             .append("  contextPath = ").append(contextPath).append("\n")
             .append("  webApp = ").append(webApp).append("\n")
-            .append("  resource = ").append(resource).append("\n")
+            .append("  baseResource = ").append(baseResource).append("\n")
             .append("  idleTimeout = ").append(idleTimeout).append("\n")
             .append("  soLingerTime = ").append(soLingerTime).append("\n")
             .append("  minThreads = ").append(minThreads).append("\n")
             .append("  maxThreads = ").append(maxThreads).append("\n")
             .append("  plus = ").append(plus).append("\n")
             .append("  classPath = ").append(classPath).append("\n")
+            .append("  defaultServlet = ").append(defaultServlet).append("\n")
             .append("]")
             .toString();
     }

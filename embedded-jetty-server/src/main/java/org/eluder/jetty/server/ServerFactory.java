@@ -10,7 +10,8 @@ import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
-import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.DefaultServlet;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
@@ -74,17 +75,21 @@ public class ServerFactory {
         WebAppContext context = new WebAppContext();
         context.setContextPath(config.getContextPath());
         context.setWar(config.getWebApp());
-        
-        Resource baseResource = getBaseResource(config.getResource());
-        if (baseResource != null) {
-            ResourceHandler resourceHandler = new ResourceHandler();
-            resourceHandler.setBaseResource(baseResource);
-            context.setHandler(resourceHandler);
+        context.setBaseResource(getBaseResource(config.getBaseResource()));
+
+        if (config.isDefaultServlet()) {
+            context.addServlet(createDefaultServlet(), "/");
         }
 
         List<Handler> handlers = new ArrayList<>(1);
         handlers.add(context);
         return handlers;
+    }
+    
+    protected ServletHolder createDefaultServlet() {
+        ServletHolder sh = new ServletHolder("default", DefaultServlet.class);
+        sh.setInitOrder(0);
+        return sh;
     }
     
     protected ContextHandlerCollection createContextHandlerCollection() {
