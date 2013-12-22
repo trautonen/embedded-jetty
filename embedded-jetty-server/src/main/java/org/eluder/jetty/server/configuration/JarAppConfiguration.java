@@ -8,7 +8,7 @@ import org.eclipse.jetty.webapp.WebInfConfiguration;
 public class JarAppConfiguration extends WebInfConfiguration {
 
     @Override
-    public void preConfigure(WebAppContext context) throws Exception {
+    public void preConfigure(final WebAppContext context) throws Exception {
         if (isJar(context.getWar())) {
             Resource jar = Resource.newResource(context.getWar());
             ((WebAppClassLoader) context.getClassLoader()).addJars(jar);

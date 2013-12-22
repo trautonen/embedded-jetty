@@ -14,7 +14,7 @@ public class ClassPathConfiguration extends WebInfConfiguration {
     private static final String CLASSES_PATTERN = ".*/test-classes/.*,.*/classes/.*";
     
     @Override
-    public void preConfigure(WebAppContext context) throws Exception {
+    public void preConfigure(final WebAppContext context) throws Exception {
         String containerPattern = applyPatterns(context);
         context.setAttribute(CONTAINER_JAR_PATTERN, containerPattern);
         LOG.debug("Set container JAR pattern to: {}", containerPattern);
@@ -22,20 +22,20 @@ public class ClassPathConfiguration extends WebInfConfiguration {
     }
 
     @Override
-    public void resolveTempDirectory(WebAppContext context) throws Exception {
+    public void resolveTempDirectory(final WebAppContext context) throws Exception {
         if (hasStaticContent(context)) {
             super.resolveTempDirectory(context);
         }
     }
 
     @Override
-    public void unpack(WebAppContext context) throws IOException {
+    public void unpack(final WebAppContext context) throws IOException {
         if (hasStaticContent(context)) {
             super.unpack(context);
         }
     }
 
-    protected String applyPatterns(WebAppContext context) throws Exception {
+    protected String applyPatterns(final WebAppContext context) throws Exception {
         String containerPattern = (String) context.getAttribute(CONTAINER_JAR_PATTERN);
         if (containerPattern == null) {
             return CLASSES_PATTERN;
@@ -44,7 +44,7 @@ public class ClassPathConfiguration extends WebInfConfiguration {
         }
     }
     
-    protected final boolean hasStaticContent(WebAppContext context) {
+    protected final boolean hasStaticContent(final WebAppContext context) {
         return (context.getWar() != null || context.getBaseResource() != null);
     }
 }
