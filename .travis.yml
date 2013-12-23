@@ -5,8 +5,8 @@ jdk:
 
 env:
   global:
-    - secure: "Y7G0U836qYHFApE2sxKYnHBI/xuDGhYBNbmoKFaoV1UTrghm+5swrkRPPJ18\nCW6ryJMWTstqPOzkZG4nR3Gq8B8zydLHiqiSaAkN7uJz/JKmV0CgpfMppF+L\ny/B5QmW1oB8lxDy+3JP30YMGzksbyEzVLTfGHTNbilaxmn63x60="
-    - secure: "YrY+AdDsdf9nu4mFeKP4J+aq8cGl0ImNGKaVNeU2pqF/MtBuBdZT6AzKzHSf\nCl5XYgVa44OnfJsEXBcm5VO3GIzbPNp4TR/m6wKml1K5lsIrEH0LjWml+Kp9\nY5LK1IqTsHfXH2H7uFQMpFbusXFKuXmRMXXjLaWP29UfEebx8IY="
+    - secure: "KYBoKc0ehy3yDK+ikMt6YRqRQ1UEVfyyzi0DZnOkx24Ie4o3j21GVxckwgxH\npruHldCyWkTH9N+UJW503sa2uvHWG49xzTN33rLnFHP3s0acBQc5sxdKnsuN\n8C6J2bbThezfwr01457H98+zIE5bnrNichcPfYlDkJ0fSuA7VYI="
+    - secure: "cBuZEHA7JH55yYGyvSL+FKu8xYmyncd8t9mVh2YkZ+uzOOfrhNjV/wAOJ8Rt\nwhz0UV7C0yBJ5O9C0hcKBgOkyrrsNHANGkwvH2LV+pa2Mo8eTrWuGShaM+uE\nURCDBN27T8v3dNo8swXZqbXSZ7Encjb42UmDBerauUZbE/jxSXg="
 
 before_install:
   - git submodule update --init --recursive
