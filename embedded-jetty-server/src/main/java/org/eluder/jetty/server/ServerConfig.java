@@ -2,9 +2,12 @@ package org.eluder.jetty.server;
 
 import org.eclipse.jetty.util.annotation.Name;
 
-public class ServerConfig {
+/**
+ * Embedded Jetty server configuration.
+ */
+public final class ServerConfig {
 
-    private static final String JAR_SUFFIX = ".jar";
+    public static final String JAR_SUFFIX = ".jar";
     
     // Checkstyle OFF: MagicNumber
     private int     port           = 8080;
@@ -115,7 +118,7 @@ public class ServerConfig {
         return defaultServlet;
     }
 
-    public ServerConfig setDefaultServlet(@Name(value = "defaultServlet", description = "use default servlet to serve static content") final boolean defaultServlet) {
+    public ServerConfig setDefaultServlet(@Name(value = "defaultServlet", description = "add default servlet to serve static content") final boolean defaultServlet) {
         this.defaultServlet = defaultServlet;
         return this;
     }
@@ -127,19 +130,19 @@ public class ServerConfig {
     @Override
     public String toString() {
         return new StringBuilder()
-            .append(getClass().getSimpleName()).append(" [\n")
-            .append("  port = ").append(port).append("\n")
-            .append("  contextPath = ").append(contextPath).append("\n")
-            .append("  webApp = ").append(webApp).append("\n")
-            .append("  baseResource = ").append(baseResource).append("\n")
-            .append("  idleTimeout = ").append(idleTimeout).append("\n")
-            .append("  soLingerTime = ").append(soLingerTime).append("\n")
-            .append("  minThreads = ").append(minThreads).append("\n")
-            .append("  maxThreads = ").append(maxThreads).append("\n")
-            .append("  plus = ").append(plus).append("\n")
-            .append("  classPath = ").append(classPath).append("\n")
-            .append("  defaultServlet = ").append(defaultServlet).append("\n")
-            .append("]")
-            .toString();
+                .append(getClass().getSimpleName()).append(" [\n")
+                .append("  port = ").append(port).append("\n")
+                .append("  contextPath = ").append(contextPath).append("\n")
+                .append("  webApp = ").append(webApp).append("\n")
+                .append("  baseResource = ").append(baseResource).append("\n")
+                .append("  idleTimeout = ").append(idleTimeout).append("\n")
+                .append("  soLingerTime = ").append(soLingerTime).append("\n")
+                .append("  minThreads = ").append(minThreads).append("\n")
+                .append("  maxThreads = ").append(maxThreads).append("\n")
+                .append("  plus = ").append(plus).append("\n")
+                .append("  classPath = ").append(classPath).append("\n")
+                .append("  defaultServlet = ").append(defaultServlet).append("\n")
+                .append("]")
+                .toString();
     }
 }

@@ -30,6 +30,9 @@ import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.eluder.jetty.server.configuration.ClassPathConfiguration;
 import org.eluder.jetty.server.configuration.JarAppConfiguration;
 
+/**
+ * Server factory that configures the embedded Jetty server.
+ */
 public class ServerFactory {
 
     private static final String CLASSPATH_PREFIX = "classpath:";

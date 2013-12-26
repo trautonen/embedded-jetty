@@ -4,7 +4,12 @@ import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppClassLoader;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
+import org.eluder.jetty.server.ServerConfig;
 
+/**
+ * Configuration for loading JARs. Adds the JAR to classpath and sets the
+ * contexts's extra classpath to include the JAR.
+ */
 public class JarAppConfiguration extends WebInfConfiguration {
 
     @Override
@@ -25,6 +30,6 @@ public class JarAppConfiguration extends WebInfConfiguration {
     }
 
     private boolean isJar(final String resource) {
-        return (resource != null && resource.endsWith(".jar"));
+        return (resource != null && resource.endsWith(ServerConfig.JAR_SUFFIX));
     }
 }

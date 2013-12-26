@@ -11,6 +11,9 @@ import org.eluder.jetty.cli.util.ReflectionUtils;
 import org.eluder.jetty.cli.util.ServerConfigInitializer;
 import org.eluder.jetty.server.ServerConfig;
 
+/**
+ * Factory to create command line options reflectively from server config.
+ */
 public class ServerConfigOptionsFactory {
     
     private static final int SETTER_PREFIX_LENGTH = 3;

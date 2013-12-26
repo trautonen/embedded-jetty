@@ -10,6 +10,9 @@ import org.eluder.jetty.cli.util.ReflectionUtils;
 import org.eluder.jetty.cli.util.ServerConfigInitializer;
 import org.eluder.jetty.server.ServerConfig;
 
+/**
+ * Factory to create a server config from command line options.
+ */
 public class ServerConfigFactory {
 
     private final Class<? extends ServerConfig> configType;

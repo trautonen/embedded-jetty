@@ -10,6 +10,9 @@ import org.eclipse.jetty.server.Server;
 import org.eluder.jetty.server.EmbeddedJetty;
 import org.eluder.jetty.server.ServerConfig;
 
+/**
+ * Command line interface for embedded Jetty.
+ */
 public final class EmbeddedJettyCli extends EmbeddedJetty {
     
     private static final int HELP_WIDTH = 100;

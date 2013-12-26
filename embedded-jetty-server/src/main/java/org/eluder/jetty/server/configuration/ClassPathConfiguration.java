@@ -7,6 +7,11 @@ import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 
+/**
+ * Configuration for classpath resources. Adds /test-classes and /classes
+ * directories to included pattern. Requires at least Jetty 9.0.1 that supports
+ * any regexp pattern for included resources.
+ */
 public class ClassPathConfiguration extends WebInfConfiguration {
 
     private static final Logger LOG = Log.getLogger(WebInfConfiguration.class);
