@@ -15,7 +15,7 @@ public class EmbeddedJetty {
     protected final ServerConfig serverConfig;
 
     /**
-     * Initialize embedded Jetty with server configuration-
+     * Initialize embedded Jetty with server configuration.
      * 
      * @param serverConfig the server configuration
      */
