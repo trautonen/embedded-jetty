@@ -9,12 +9,13 @@ version must be at least **9.0.1**.
 
 The main reason behind yet another embedded Jetty wrapper is that there is no really simple
 library available that allows bootstrapping a Jetty server from classpath resources using Servlet 3
-annotations using your favourite IDE. This wrapper is designed to be really simple and aimed for
+annotations inside your favourite IDE. This wrapper is designed to be really simple and aimed for
 mostly developing purposes, but nothing prevents it to be used as a production server too.
 
 While the wrapper leverages all the normal bootstrapping mechanisms, it also provides a concise
-interface to load static resources from classpath and load your web application from JAR only,
-without using the normal WAR packaging.
+interface to load static resources from classpath and load your web application from classpath or
+JAR only, without using the normal WAR packaging.
+
 
 ### Server
 
