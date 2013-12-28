@@ -8,15 +8,15 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 
 /**
- * Configuration for classpath resources. Adds /test-classes and /classes
- * directories to included pattern. Requires at least Jetty 9.0.1 that supports
- * any regexp pattern for included resources.
+ * Configuration for classpath resources. Adds all classpath resources to
+ * containter. Requires at least Jetty 9.0.1 that supports any regexp pattern
+ * for included resources.
  */
 public class ClassPathConfiguration extends WebInfConfiguration {
 
     private static final Logger LOG = Log.getLogger(WebInfConfiguration.class);
     
-    private static final String CLASSES_PATTERN = ".*/test-classes/.*,.*/classes/.*";
+    private static final String DEFAULT_PATTERN = ".*";
     
     @Override
     public void preConfigure(final WebAppContext context) throws Exception {
@@ -40,16 +40,11 @@ public class ClassPathConfiguration extends WebInfConfiguration {
         }
     }
 
-    protected String applyPatterns(final WebAppContext context) throws Exception {
-        String containerPattern = (String) context.getAttribute(CONTAINER_JAR_PATTERN);
-        if (containerPattern == null) {
-            return CLASSES_PATTERN;
-        } else {
-            return CLASSES_PATTERN + "," + containerPattern;
-        }
-    }
-    
     protected final boolean hasStaticContent(final WebAppContext context) {
         return (context.getWar() != null || context.getBaseResource() != null);
+    }
+
+    protected String applyPatterns(final WebAppContext context) throws Exception {
+        return DEFAULT_PATTERN;
     }
 }
