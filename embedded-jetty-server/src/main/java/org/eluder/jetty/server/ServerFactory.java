@@ -15,8 +15,6 @@ import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
-import org.eclipse.jetty.servlet.DefaultServlet;
-import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
@@ -58,8 +56,8 @@ public class ServerFactory {
             classList.add(ClassPathConfiguration.class.getName());
         } else {
             classList.add(WebInfConfiguration.class.getName());
-            classList.add(WebXmlConfiguration.class.getName());
         }
+        classList.add(WebXmlConfiguration.class.getName());
         classList.add(AnnotationConfiguration.class.getName());
         classList.add(MetaInfConfiguration.class.getName());
         classList.add(FragmentConfiguration.class.getName());
@@ -90,19 +88,9 @@ public class ServerFactory {
         context.setWar(config.getWebApp());
         context.setBaseResource(getBaseResource(config.getBaseResource()));
 
-        if (config.isDefaultServlet()) {
-            context.addServlet(createDefaultServlet(), "/");
-        }
-
         List<Handler> handlers = new ArrayList<>(1);
         handlers.add(context);
         return handlers;
-    }
-    
-    protected ServletHolder createDefaultServlet() {
-        ServletHolder sh = new ServletHolder("default", DefaultServlet.class);
-        sh.setInitOrder(0);
-        return sh;
     }
     
     protected ContextHandlerCollection createContextHandlerCollection() {

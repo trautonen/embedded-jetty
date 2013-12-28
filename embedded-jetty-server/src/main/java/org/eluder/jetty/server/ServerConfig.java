@@ -21,7 +21,6 @@ public final class ServerConfig {
     private int     maxThreads     = 100;
     private boolean plus           = false;
     private boolean classPath      = false;
-    private boolean defaultServlet = false;
     // Checkstyle ON: MagicNumber
     
     public int getPort() {
@@ -114,15 +113,6 @@ public final class ServerConfig {
         return this;
     }
 
-    public boolean isDefaultServlet() {
-        return defaultServlet;
-    }
-
-    public ServerConfig setDefaultServlet(@Name(value = "defaultServlet", description = "add default servlet to serve static content") final boolean defaultServlet) {
-        this.defaultServlet = defaultServlet;
-        return this;
-    }
-
     public boolean isJarApp() {
         return (getWebApp() != null && getWebApp().endsWith(JAR_SUFFIX));
     }
@@ -141,7 +131,6 @@ public final class ServerConfig {
                 .append("  maxThreads = ").append(maxThreads).append("\n")
                 .append("  plus = ").append(plus).append("\n")
                 .append("  classPath = ").append(classPath).append("\n")
-                .append("  defaultServlet = ").append(defaultServlet).append("\n")
                 .append("]")
                 .toString();
     }
