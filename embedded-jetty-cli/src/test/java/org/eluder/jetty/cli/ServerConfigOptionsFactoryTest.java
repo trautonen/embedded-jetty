@@ -16,7 +16,7 @@ public class ServerConfigOptionsFactoryTest {
         assertEquals(10, options.getOptions().size());
         assertTrue(options.getOption("webApp").isRequired());
         assertTrue(options.getOption("maxThreads").hasArg());
-        assertFalse(options.getOption("classPath").hasArg());
+        assertFalse(options.getOption("classpath").hasArg());
     }
     
 }
