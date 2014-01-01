@@ -16,7 +16,7 @@ public class ClasspathConfiguration extends WebInfConfiguration {
 
     private static final Logger LOG = Log.getLogger(WebInfConfiguration.class);
     
-    private static final String DEFAULT_PATTERN = ".*";
+    private static final String DEFAULT_PATTERN = "(?!.*(/jre/lib/|/org/eclipse/jetty/)).*";
     
     @Override
     public void preConfigure(final WebAppContext context) throws Exception {
