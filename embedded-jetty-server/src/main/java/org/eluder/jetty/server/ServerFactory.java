@@ -18,6 +18,7 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
+import org.eclipse.jetty.webapp.AbstractConfiguration;
 import org.eclipse.jetty.webapp.Configuration.ClassList;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
@@ -51,9 +52,9 @@ public class ServerFactory {
     protected ClassList createClassList() {
         ClassList classList = new ClassList(new String[0]);
         if (config.isJarApp()) {
-            classList.add(JarAppConfiguration.class.getName());
+            classList.add(getJarAppConfiguration().getName());
         } else if (config.isClasspath()) {
-            classList.add(ClasspathConfiguration.class.getName());
+            classList.add(getClasspathConfiguration().getName());
         } else {
             classList.add(WebInfConfiguration.class.getName());
         }
@@ -67,6 +68,14 @@ public class ServerFactory {
         }
         classList.add(JettyWebXmlConfiguration.class.getName());
         return classList;
+    }
+    
+    protected Class<? extends AbstractConfiguration> getJarAppConfiguration() {
+        return JarAppConfiguration.class;
+    }
+    
+    protected Class<? extends AbstractConfiguration> getClasspathConfiguration() {
+        return ClasspathConfiguration.class;
     }
     
     protected HttpConfiguration createHttpConfiguration() {
