@@ -25,7 +25,7 @@ The main server access point is the `EmbeddedJetty` class which is configured us
 Bootstrapping the server using Servlet 3 annotations is as simple as:
 
 ```java
-ServerConfig serverConfig = new ServerConfig().setClassPath(true);
+ServerConfig serverConfig = new ServerConfig().setClasspath(true);
 new EmbeddedJetty(serverConfig).run();
 ```
 
@@ -38,7 +38,7 @@ ServerConfig serverConfig = new ServerConfig()
         .setPlus(true)
         .setBaseResource("classpath:/resources")
         .setDefaultServlet(true)
-        .setClassPath(true);
+        .setClasspath(true);
 new EmbeddedJetty(serverConfig) {
     @Override
     protected ServerFactory createServerFactory() {
