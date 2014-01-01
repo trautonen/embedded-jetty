@@ -20,7 +20,7 @@ public final class ServerConfig {
     private int     minThreads     = 5;
     private int     maxThreads     = 100;
     private boolean plus           = false;
-    private boolean classPath      = false;
+    private boolean classpath      = false;
     // Checkstyle ON: MagicNumber
     
     public int getPort() {
@@ -104,12 +104,12 @@ public final class ServerConfig {
         return this;
     }
     
-    public boolean isClassPath() {
-        return classPath;
+    public boolean isClasspath() {
+        return classpath;
     }
     
-    public ServerConfig setClassPath(@Name(value = "classPath", description = "use classpath annotation scanning") final boolean classPath) {
-        this.classPath = classPath;
+    public ServerConfig setClasspath(@Name(value = "classpath", description = "use classpath annotation scanning") final boolean classpath) {
+        this.classpath = classpath;
         return this;
     }
 
@@ -130,7 +130,7 @@ public final class ServerConfig {
                 .append("  minThreads = ").append(minThreads).append("\n")
                 .append("  maxThreads = ").append(maxThreads).append("\n")
                 .append("  plus = ").append(plus).append("\n")
-                .append("  classPath = ").append(classPath).append("\n")
+                .append("  classpath = ").append(classpath).append("\n")
                 .append("]")
                 .toString();
     }

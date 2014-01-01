@@ -25,7 +25,7 @@ import org.eclipse.jetty.webapp.MetaInfConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
-import org.eluder.jetty.server.configuration.ClassPathConfiguration;
+import org.eluder.jetty.server.configuration.ClasspathConfiguration;
 import org.eluder.jetty.server.configuration.JarAppConfiguration;
 
 /**
@@ -52,8 +52,8 @@ public class ServerFactory {
         ClassList classList = new ClassList(new String[0]);
         if (config.isJarApp()) {
             classList.add(JarAppConfiguration.class.getName());
-        } else if (config.isClassPath()) {
-            classList.add(ClassPathConfiguration.class.getName());
+        } else if (config.isClasspath()) {
+            classList.add(ClasspathConfiguration.class.getName());
         } else {
             classList.add(WebInfConfiguration.class.getName());
         }

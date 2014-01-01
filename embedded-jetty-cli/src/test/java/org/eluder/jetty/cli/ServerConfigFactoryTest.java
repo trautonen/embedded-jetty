@@ -21,7 +21,7 @@ public class ServerConfigFactoryTest {
     @Test
     public void testCreateWithDefaults() throws Exception {
         ServerConfig serverConfig = createServerConfig("-webApp", "./app.war");
-        assertFalse(serverConfig.isClassPath());
+        assertFalse(serverConfig.isClasspath());
         assertFalse(serverConfig.isPlus());
         assertEquals("./app.war", serverConfig.getWebApp());
     }
@@ -29,7 +29,7 @@ public class ServerConfigFactoryTest {
     @Test
     public void testCreateWithArguments() throws Exception {
         ServerConfig serverConfig = createServerConfig("-plus", "-minThreads", "5", "-webApp", "./app.war");
-        assertFalse(serverConfig.isClassPath());
+        assertFalse(serverConfig.isClasspath());
         assertTrue(serverConfig.isPlus());
         assertEquals(5, serverConfig.getMinThreads());
         assertEquals("./app.war", serverConfig.getWebApp());

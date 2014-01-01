@@ -12,7 +12,7 @@ import org.eclipse.jetty.webapp.WebInfConfiguration;
  * containter. Requires at least Jetty 9.0.1 that supports any regexp pattern
  * for included resources.
  */
-public class ClassPathConfiguration extends WebInfConfiguration {
+public class ClasspathConfiguration extends WebInfConfiguration {
 
     private static final Logger LOG = Log.getLogger(WebInfConfiguration.class);
     
