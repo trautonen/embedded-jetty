@@ -1,5 +1,8 @@
 package org.eluder.jetty.server;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jetty.util.annotation.Name;
 
 /**
@@ -21,6 +24,8 @@ public final class ServerConfig {
     private int     maxThreads     = 100;
     private boolean plus           = false;
     private boolean classpath      = false;
+    
+    private final Map<String, Object> contextAttributes = new HashMap<>();
     // Checkstyle ON: MagicNumber
     
     public int getPort() {
@@ -113,6 +118,10 @@ public final class ServerConfig {
         return this;
     }
 
+    public Map<String, Object> getContextAttributes() {
+        return contextAttributes;
+    }
+
     public boolean isJarApp() {
         return (getWebApp() != null && getWebApp().endsWith(JAR_SUFFIX));
     }
@@ -131,6 +140,7 @@ public final class ServerConfig {
                 .append("  maxThreads = ").append(maxThreads).append("\n")
                 .append("  plus = ").append(plus).append("\n")
                 .append("  classpath = ").append(classpath).append("\n")
+                .append("  contextAttributes = ").append(contextAttributes).append("\n")
                 .append("]")
                 .toString();
     }

@@ -6,6 +6,7 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
+import org.eluder.jetty.server.ContextAttributes;
 
 /**
  * Configuration for classpath resources. Adds all classpath resources to
@@ -16,11 +17,18 @@ public class ClasspathConfiguration extends WebInfConfiguration {
 
     private static final Logger LOG = Log.getLogger(WebInfConfiguration.class);
     
-    private static final String DEFAULT_PATTERN = "(?!.*(/jre/lib/|/org/eclipse/jetty/)).*";
-    
     @Override
-    public void preConfigure(final WebAppContext context) throws Exception {
-        String containerPattern = applyPatterns(context);
+    public final void preConfigure(final WebAppContext context) throws Exception {
+        String classpathPattern = applyPattern(context);
+        if (classpathPattern == null) {
+            throw new IllegalArgumentException("Classpath pattern not defined");
+        }
+        String containerPattern = (String) context.getAttribute(CONTAINER_JAR_PATTERN);
+        if (containerPattern == null) {
+            containerPattern = classpathPattern;
+        } else {
+            containerPattern = classpathPattern + "," + containerPattern;
+        }
         context.setAttribute(CONTAINER_JAR_PATTERN, containerPattern);
         LOG.debug("Set container JAR pattern to: {}", containerPattern);
         super.preConfigure(context);
@@ -44,7 +52,8 @@ public class ClasspathConfiguration extends WebInfConfiguration {
         return (context.getWar() != null || context.getBaseResource() != null);
     }
 
-    protected String applyPatterns(final WebAppContext context) throws Exception {
-        return DEFAULT_PATTERN;
+    protected String applyPattern(final WebAppContext context) {
+        String pattern = (String) context.getAttribute(ContextAttributes.CLASSPATH_PATTERN);
+        return (pattern != null ? pattern : ContextAttributes.ClasspathPatterns.NON_SYSTEM);
     }
 }

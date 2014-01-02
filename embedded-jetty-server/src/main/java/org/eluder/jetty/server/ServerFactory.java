@@ -3,6 +3,7 @@ package org.eluder.jetty.server;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.io.RuntimeIOException;
@@ -92,14 +93,20 @@ public class ServerFactory {
     }
     
     protected List<Handler> createContexts() {
+        List<Handler> handlers = new ArrayList<>(1);
+        handlers.add(createWebAppContext());
+        return handlers;
+    }
+    
+    protected Handler createWebAppContext() {
         WebAppContext context = new WebAppContext();
         context.setContextPath(config.getContextPath());
         context.setWar(config.getWebApp());
         context.setBaseResource(getBaseResource(config.getBaseResource()));
-
-        List<Handler> handlers = new ArrayList<>(1);
-        handlers.add(context);
-        return handlers;
+        for (Map.Entry<String, Object> contextAttribute : config.getContextAttributes().entrySet()) {
+            context.setAttribute(contextAttribute.getKey(), contextAttribute.getValue());
+        }
+        return context;
     }
     
     protected ContextHandlerCollection createContextHandlerCollection() {
