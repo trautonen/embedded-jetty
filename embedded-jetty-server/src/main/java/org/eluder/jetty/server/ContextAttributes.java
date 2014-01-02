@@ -1,6 +1,6 @@
 package org.eluder.jetty.server;
 
-public class ContextAttributes {
+public final class ContextAttributes {
     
     public static final String CLASSPATH_PATTERN = "org.eluder.jetty.server.ClasspathPattern";
     public static final String JAR_APP_PATTERN = "org.eluder.jetty.server.JarAppPattern";
@@ -9,7 +9,7 @@ public class ContextAttributes {
         // hide constructor
     }
     
-    public static class ClasspathPatterns {
+    public final static class ClasspathPatterns {
         
         public static final String NON_SYSTEM = "(?!.*(/jre/lib/|/org/eclipse/jetty/)).*";
         public static final String ALL_JARS = ".*\\.jar$";
