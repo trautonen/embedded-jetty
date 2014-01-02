@@ -9,7 +9,7 @@ public final class ContextAttributes {
         // hide constructor
     }
     
-    public final static class ClasspathPatterns {
+    public static final class ClasspathPatterns {
         
         public static final String NON_SYSTEM = "(?!.*(/jre/lib/|/org/eclipse/jetty/)).*";
         public static final String ALL_JARS = ".*\\.jar$";
