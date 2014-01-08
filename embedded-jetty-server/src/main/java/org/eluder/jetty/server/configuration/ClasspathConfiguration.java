@@ -48,6 +48,13 @@ public class ClasspathConfiguration extends WebInfConfiguration {
         }
     }
 
+    @Override
+    public void deconfigure(final WebAppContext context) throws Exception {
+        if (hasStaticContent(context)) {
+            super.deconfigure(context);
+        }
+    }
+
     protected final boolean hasStaticContent(final WebAppContext context) {
         return (context.getWar() != null || context.getBaseResource() != null);
     }

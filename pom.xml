@@ -1,47 +1,48 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.eluder</groupId>
-		<artifactId>eluder-parent</artifactId>
-		<version>4</version>
-	</parent>
+    <parent>
+        <groupId>org.eluder</groupId>
+        <artifactId>eluder-parent</artifactId>
+        <version>4</version>
+    </parent>
 
-	<groupId>org.eluder.jetty</groupId>
-	<artifactId>embedded-jetty</artifactId>
-	<version>0.9.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <groupId>org.eluder.jetty</groupId>
+    <artifactId>embedded-jetty</artifactId>
+    <version>0.9.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<modules>
-		<module>embedded-jetty-server</module>
-		<module>embedded-jetty-cli</module>
-	</modules>
+    <modules>
+        <module>embedded-jetty-server</module>
+        <module>embedded-jetty-cli</module>
+        <module>embedded-jetty-examples</module>
+    </modules>
 
-	<properties>
-		<java.version>1.7</java.version>
-		<jetty.version>9.1.0.v20131115</jetty.version>
-	</properties>
+    <properties>
+        <java.version>1.7</java.version>
+        <jetty.version>9.1.0.v20131115</jetty.version>
+    </properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-			</plugin>
-		</plugins>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven.compiler.version}</version>
-					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

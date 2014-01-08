@@ -116,6 +116,10 @@ public class ServerFactory {
         return handlers;
     }
     
+    protected void customize(final Server server) {
+        server.setStopAtShutdown(true);
+    }
+    
     public Server create() {
         Server server = new Server(createThreadPool());
         server.addBean(createClassList());
@@ -123,6 +127,7 @@ public class ServerFactory {
                 createConnector(server)
         });
         server.setHandler(createContextHandlerCollection());
+        customize(server);
         return server;
     }
     

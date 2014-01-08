@@ -18,7 +18,7 @@ public class ServerConfigOptionsFactory {
     
     private static final int SETTER_PREFIX_LENGTH = 3;
     
-    private final Class<? extends ServerConfig> configType;
+    protected final Class<? extends ServerConfig> configType;
     
     public ServerConfigOptionsFactory(final Class<? extends ServerConfig> configType) {
         this.configType = configType;
@@ -27,7 +27,7 @@ public class ServerConfigOptionsFactory {
     public Options create() {
         Options options = new Options();
         ServerConfig initial = ServerConfigInitializer.newInstance(configType);
-        for (Method method : ReflectionUtils.getNamedSetters(configType).values()) {
+        for (Method method : getNamedSetters()) {
             Name name = ReflectionUtils.getName(method);
             Class<?> argumentType = ReflectionUtils.getSetterArgumentType(method);
             Object defaultValue = ReflectionUtils.invokeMethod(initial, toGetter(method));
@@ -40,10 +40,15 @@ public class ServerConfigOptionsFactory {
                     .create(name.value());
             options.addOption(option);
         }
+        options.addOption("help", false, "this help screen");
         return options;
     }
     
-    private String getArgumentName(final Class<?> argumentType) {
+    protected Iterable<Method> getNamedSetters() {
+        return ReflectionUtils.getNamedSetters(configType).values();
+    }
+    
+    protected String getArgumentName(final Class<?> argumentType) {
         if (PropertyMapper.isInteger(argumentType)) {
             return "number";
         }
@@ -56,14 +61,14 @@ public class ServerConfigOptionsFactory {
         return "";
     }
     
-    private boolean isRequired(final String opt) {
+    protected boolean isRequired(final String opt) {
         if ("webApp".equals(opt)) {
             return true;
         }
         return false;
     }
     
-    private String getDescription(final String description, final Object defaultValue) {
+    protected String getDescription(final String description, final Object defaultValue) {
         if (defaultValue == null) {
             return description;
         } else {
